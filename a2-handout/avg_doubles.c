@@ -1,29 +1,19 @@
-//mulig svar
-
+#include "numlib.h"
 #include <stdio.h>
-#include <stdlib.h>
-
-extern double read_double_bin();
-extern void write_double_ascii(double);
 
 int main() {
-    double sum = 0.0;
+    double sum = 0.0, value;
     int count = 0;
-    double number;
-    
-    while (fread(&number, sizeof(double), 1, stdin)) {
-        sum += number;
+    while (read_double_bin(stdin, &value) == 0) {
+        sum += value;
         count++;
     }
-
     if (count == 0) {
-        fprintf(stderr, "No numbers input.\n");
+        fprintf(stderr, "No numbers provided\n");
         return 1;
     }
-
-    double avg = sum / count;
-    write_double_ascii(avg);
+    double average = sum / count;
+    write_double_ascii(stdout, average);
     printf("\n");
-
     return 0;
 }
