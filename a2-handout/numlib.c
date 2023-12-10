@@ -45,12 +45,24 @@ int read_uint_ascii(FILE *f, uint32_t *out) {
   }
 }
 
+//Pray
 int read_double_ascii(FILE *f, double *out) {
-  if (fscanf(f, "%lf", out) != 1) {
+  int result = fscanf(f, "%lf", out);
+  if (result == EOF) {
+    if (feof(f)) {
+      // Valhalla
+      return EOF;
+    } else {
+      // Ammageddon
+      return 1;
+    }
+  } else if (result == 1) {
+    return 0;
+  } else {
     return 1;
   }
-  return 0;  
 }
+
 
 
 int read_uint_le(FILE *f, uint32_t *out) {
